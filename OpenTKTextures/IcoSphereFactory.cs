@@ -5,23 +5,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static OpenTKPrimitives.RenderObject;
+using static OpenTKTextures.ColoredRenderObject;
 
-namespace OpenTKPrimitives
+namespace OpenTKTextures
 {
     public class IcoSphereFactory
     {
-        static private List<Vector3> _points;
-        static private int _index;
-        static private Dictionary<long, int> _middlePointIndexCache;
+        private List<Vector3> _points;
+        private int _index;
+        private Dictionary<long, int> _middlePointIndexCache;
+        private float scale = 1.0f;
 
-        public  static Vertex[] Create(int recursionLevel, Color4 color)
+        public TexturedVertex[] Create(int recursionLevel,float scale = 1)
         {
             _middlePointIndexCache = new Dictionary<long, int>();
             _points = new List<Vector3>();
             _index = 0;
-            var t = (float)((1.0 + Math.Sqrt(5.0)) / 2.0);
-            var s = 1;
+            this.scale = scale;
+            var t = (float)(((1.0  + Math.Sqrt(5.0)) / 2.0));
+            var s = 1.0f;
 
             AddVertex(new Vector3(-s, t, 0));
             AddVertex(new Vector3(s, t, 0));
@@ -91,7 +93,7 @@ namespace OpenTKPrimitives
 
 
             // done, now add triangles to mesh
-            var vertices = new List<Vertex>();
+            var vertices = new List<TexturedVertex>();
 
             foreach (var tri in faces)
             {
@@ -99,9 +101,9 @@ namespace OpenTKPrimitives
                 var uv2 = GetSphereCoord(tri.V2);
                 var uv3 = GetSphereCoord(tri.V3);
                 FixColorStrip(ref uv1, ref uv2, ref uv3);
-                vertices.Add(new Vertex(new Vector4(tri.V1, 1), color));
-                vertices.Add(new Vertex(new Vector4(tri.V2, 1), color));
-                vertices.Add(new Vertex(new Vector4(tri.V3, 1), color));
+                vertices.Add(new TexturedVertex(new Vector4(tri.V1, 1), uv1));
+                vertices.Add(new TexturedVertex(new Vector4(tri.V2, 1), uv2));
+                vertices.Add(new TexturedVertex(new Vector4(tri.V3, 1), uv3));
             }
 
             return vertices.ToArray();
@@ -133,14 +135,14 @@ namespace OpenTKPrimitives
         }
 
 
-        private static int AddVertex(Vector3 p)
+        private int AddVertex(Vector3 p)
         {
-            _points.Add(p.Normalized());
+            _points.Add(p.Normalized() * this.scale);
             return _index++;
         }
 
         // return index of point in the middle of p1 and p2
-        private static int GetMiddlePoint(Vector3 point1, Vector3 point2)
+        private int GetMiddlePoint(Vector3 point1, Vector3 point2)
         {
             long i1 = _points.IndexOf(point1);
             long i2 = _points.IndexOf(point2);

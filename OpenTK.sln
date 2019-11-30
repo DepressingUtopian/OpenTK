@@ -1,9 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.572
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29418.71
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTKPrimitives", "OpenGLCurs\OpenTKPrimitives.csproj", "{C0A4999F-2559-490F-8B60-F9FFEBC95B2F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTKTextures", "OpenTKTextures\OpenTKTextures.csproj", "{3D4AC06B-CC7A-4DC2-A5A0-AB520F6D4308}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTKWaterWorld", "OpenTKWaterWorld\OpenTKWaterWorld.csproj", "{4F51B20B-6BBE-4B48-A807-2528AA5AFE70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTKCloth", "OpenTKCloth\OpenTKCloth.csproj", "{2A67DD6B-6034-4E2A-8FBF-11C3252DC6B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{C0A4999F-2559-490F-8B60-F9FFEBC95B2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0A4999F-2559-490F-8B60-F9FFEBC95B2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0A4999F-2559-490F-8B60-F9FFEBC95B2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D4AC06B-CC7A-4DC2-A5A0-AB520F6D4308}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D4AC06B-CC7A-4DC2-A5A0-AB520F6D4308}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D4AC06B-CC7A-4DC2-A5A0-AB520F6D4308}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D4AC06B-CC7A-4DC2-A5A0-AB520F6D4308}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F51B20B-6BBE-4B48-A807-2528AA5AFE70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F51B20B-6BBE-4B48-A807-2528AA5AFE70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F51B20B-6BBE-4B48-A807-2528AA5AFE70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F51B20B-6BBE-4B48-A807-2528AA5AFE70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A67DD6B-6034-4E2A-8FBF-11C3252DC6B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A67DD6B-6034-4E2A-8FBF-11C3252DC6B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A67DD6B-6034-4E2A-8FBF-11C3252DC6B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A67DD6B-6034-4E2A-8FBF-11C3252DC6B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

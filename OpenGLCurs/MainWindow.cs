@@ -9,9 +9,9 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Input;
-using static OpenGLCurs.RenderObject;
+using static OpenTKPrimitives.RenderObject;
 
-namespace OpenGLCurs
+namespace OpenTKPrimitives
 {
 
     public class MainWindow : GameWindow
@@ -23,7 +23,10 @@ namespace OpenGLCurs
         private Matrix4 _projectionMatrix;
         private float _z = -2.7f;
         private float _fov = 60f;
-
+        bool IsMouseClick = true;
+        float mouseX = 0;
+        float mouseY = 0;
+        Water water = new Water();
         public MainWindow() : base(1820, // initial width
                 980, // initial height
                 GraphicsMode.Default,
@@ -46,9 +49,10 @@ namespace OpenGLCurs
     
             VSync = VSyncMode.Off;
             CreateProjection();
-            _renderObjects.Add(new RenderObject(ObjectFactory.CreateSolidCube(0.2f, Color4.HotPink)));
-            _renderObjects.Add(new RenderObject(ObjectFactory.CreateSolidSquare(0.2f, Color4.BlueViolet)));
-            _renderObjects.Add(new RenderObject(IcoSphereFactory.Create(3,Color4.Aqua)));
+           // _renderObjects.Add(new RenderObject(ObjectFactory.CreateSolidCube(0.2f, Color4.HotPink)));
+           // _renderObjects.Add(new RenderObject(ObjectFactory.CreateSolidSquare(0.2f, Color4.BlueViolet)));
+            //_renderObjects.Add(new RenderObject(IcoSphereFactory.Create(3,Color4.Aqua)));
+            _renderObjects.Add(new RenderObject(water.GenWater(Color4.Red)));
 
             CursorVisible = true;
 
@@ -61,6 +65,21 @@ namespace OpenGLCurs
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             HandleKeyboard(e.Time);
+        }
+        protected override void OnMouseDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseDown(e);
+
+            if (e.Button == MouseButton.Left)
+            {
+                mouseX = (e.X - Width / 2f) / (Width / 2f);
+                mouseY = -(e.Y - Height / 2f) / (Height / 2f);
+                // Pass coordinates of point to a_Position
+                IsMouseClick = true;
+
+
+
+            }
         }
         private void HandleKeyboard(double dt)
         {
@@ -106,31 +125,53 @@ namespace OpenGLCurs
             {
                 _z -= 0.2f * (float)dt;
             }
+            if (keyState.IsKeyDown(Key.Q))
+            {
+                var rd = Matrix4.CreateRotationX(1);
+                _projectionMatrix *= rd;
+            }
+            if (keyState.IsKeyDown(Key.A))
+            {
+                var rd = Matrix4.CreateRotationY(1);
+                _projectionMatrix *= rd;
+            }
+            if (keyState.IsKeyDown(Key.Z))
+            {
+                var rd = Matrix4.CreateRotationZ(1);
+                _projectionMatrix *= rd;
+            }
+
         }
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             _time += e.Time;
             Title = $" Отображение примитивов (Vsync: {VSync}) FPS: {1f / e.Time:0}";
-
+          
             GL.ClearColor(_backColor);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             GL.UseProgram(_program);
+           
             GL.UniformMatrix4(20, false, ref _projectionMatrix);
            
             float c = 0f;
+        
+                _renderObjects[_renderObjects.Count - 1] = new RenderObject(water.GenWater(Color4.Aqua));
+            
             foreach (var renderObject in _renderObjects)
             {
                 renderObject.Bind();
                
-                    var k = (float)(_time * (0.05f + (0.1 * c)));
+                
+                    //var k = (float)(_time * (0.05f + (0.1 * c)));
                     var t2 = Matrix4.CreateTranslation(
-                        (float)(Math.Sin(k * 5f) * (c + 0.5f)),
-                        (float)(Math.Cos(k * 5f) * (c + 0.5f)), _z);
-                    var r1 = Matrix4.CreateRotationX(k * 13.0f);
-                    var r2 = Matrix4.CreateRotationY(k * 13.0f);
-                    var r3 = Matrix4.CreateRotationZ(k * 3.0f);
-                    var modelView = r1 * r2 * r3 * t2;
+                        -2,
+                       -2, _z - 3);
+                    var r1 = Matrix4.CreateRotationY(0);
+                    var s = Matrix4.CreateScale(10f,6f,1.0f);
+                // var r2 = Matrix4.CreateRotationY(k * 13.0f);
+                //  var r3 = Matrix4.CreateRotationZ(k * 3.0f);
+                    var modelView = s * t2 * r1;
                   
                 
                 GL.UniformMatrix4(21, false, ref modelView);
@@ -139,6 +180,7 @@ namespace OpenGLCurs
             }
             GL.PointSize(10);
             SwapBuffers();
+            
         }
         private int CompileShaders(ShaderType type, string path)
         {

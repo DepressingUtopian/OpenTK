@@ -4,14 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace OpenTKPrimitives
 {
-    class Program
+    public class Point
     {
-        static void Main(string[] args)
-        {
-            new MainWindow().Run(60);
-        }
+        public float x;
+        public float y;
+        public float z;
+        public float vz;
+
+        public Point() { z = 0;vz = 0; }
     }
+
 }

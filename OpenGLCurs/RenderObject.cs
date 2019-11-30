@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL4;
 
-namespace OpenGLCurs
+namespace OpenTKPrimitives
 {
     public class RenderObject
     {
@@ -71,7 +71,7 @@ namespace OpenGLCurs
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-
+   
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)
